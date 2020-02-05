@@ -1,7 +1,7 @@
 var tela = document.querySelector('canvas');
     var pincel = tela.getContext('2d');
 
-    pincel.fillStyle = 'lightgray';
+    pincel.fillStyle = 'white';
     pincel.fillRect(0, 0, 600, 400);
 
     var raio = 10;
