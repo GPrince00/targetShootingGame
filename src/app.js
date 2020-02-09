@@ -1,12 +1,13 @@
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
 
-var radius = 10;
-var xrandom = drawPosition(800);
-var yrandom = drawPosition(500);
+const radius = 10;
+let xrandom = drawPosition(canvas.width);
+let yrandom = drawPosition(canvas.height);
 let running = false;
 let frames = 0;
-
+let position = 0;
+let difficultLevel = 80;
 
 const drawCircle = (x, y, radius, color) => {
     ctx.fillStyle = color;
@@ -31,7 +32,7 @@ function drawPosition(maximo) {
 }
 
 const updateCanvas = () => {
-    if (frames % 40 === 0) {        
+    if (frames % difficultLevel === 0) {        
         resetCanvas();
         xrandom = drawPosition(canvas.width);
         yrandom = drawPosition(canvas.height);
@@ -47,24 +48,17 @@ const checkCollision = (event) => {
         && (x < xrandom + radius)
         && (y > yrandom - radius)
         && (y < yrandom + radius)) {
-
         nextLevel();
     }
 }
 
 canvas.onclick = checkCollision;
 
-var position = 0;
-var difficultLevel = 4000;
-//setInterval(updateCanvas, difficultLevel);
-
 const nextLevel = () => {
-    var level = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard colore'];
+    var levelArray = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard core'];
     position++;
-    alert('Acertou! Nível: ' + level[position]);
-
-    difficultLevel = difficultLevel - 500;
-  //  setInterval(updateCanvas, difficultLevel);
+    alert('Acertou! Nível: ' + levelArray[position]);
+    difficultLevel -= 7;
 }
 
 const render = () => {
