@@ -2,11 +2,11 @@ var tela = document.querySelector('canvas');
     var pincel = tela.getContext('2d');
 
     pincel.fillStyle = 'white';
-    pincel.fillRect(0, 0, 600, 400);
+    pincel.fillRect(0, 0, 800, 500);
 
     var raio = 10;
-    var xAleatorio = sorteiaPosicao(600);
-    var yAleatorio = sorteiaPosicao(400);
+    var xAleatorio = sorteiaPosicao(800);
+    var yAleatorio = sorteiaPosicao(500);
 
     function desenhaCirculo(x, y, raio, cor) {
 
@@ -19,7 +19,7 @@ var tela = document.querySelector('canvas');
 
     function limpaTela() {
 
-        pincel.clearRect(0, 0, 600, 400);
+        pincel.clearRect(0, 0, 800, 600);
     }
 
     function desenhaAlvo(x, y) {
