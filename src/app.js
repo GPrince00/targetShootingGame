@@ -4,9 +4,12 @@ var ctx = canvas.getContext('2d');
 var radius = 10;
 var xrandom = drawPosition(800);
 var yrandom = drawPosition(500);
+let running = false;
+let frames = 0;
 
-const drawCircle = (x, y, radius, cor) => {
-    ctx.fillStyle = cor;
+
+const drawCircle = (x, y, radius, color) => {
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fill();
@@ -28,10 +31,12 @@ function drawPosition(maximo) {
 }
 
 const updateCanvas = () => {
-    resetCanvas();
-    xrandom = drawPosition(canvas.width);
-    yrandom = drawPosition(canvas.height);
-    drawTarget(xrandom, yrandom);
+    if (frames % 40 === 0) {        
+        resetCanvas();
+        xrandom = drawPosition(canvas.width);
+        yrandom = drawPosition(canvas.height);
+        drawTarget(xrandom, yrandom);
+      }
 }
 
 const checkCollision = (event) => {
@@ -51,13 +56,24 @@ canvas.onclick = checkCollision;
 
 var position = 0;
 var difficultLevel = 4000;
-setInterval(updateCanvas, difficultLevel);
+//setInterval(updateCanvas, difficultLevel);
 
 const nextLevel = () => {
-    var level = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard Core'];
+    var level = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard colore'];
     position++;
     alert('Acertou! Nível: ' + level[position]);
 
     difficultLevel = difficultLevel - 500;
-    setInterval(updateCanvas, difficultLevel);
+  //  setInterval(updateCanvas, difficultLevel);
 }
+
+const render = () => {
+    updateCanvas();
+    frames += 1;
+    if (running) {
+        window.requestAnimationFrame(render);
+      }
+}
+
+running = true;
+render();
