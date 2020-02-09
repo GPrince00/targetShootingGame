@@ -1,23 +1,23 @@
-var tela = document.querySelector('canvas');
-var pincel = tela.getContext('2d');
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
 
 var raio = 10;
 var xAleatorio = sorteiaPosicao(800);
 var yAleatorio = sorteiaPosicao(500);
 
-function desenhaCirculo(x, y, raio, cor) {
-    pincel.fillStyle = cor;
-    pincel.beginPath();
-    pincel.arc(x, y, raio, 0, 2 * Math.PI);
-    pincel.fill();
+const desenhaCirculo = (x, y, raio, cor) => {
+    ctx.fillStyle = cor;
+    ctx.beginPath();
+    ctx.arc(x, y, raio, 0, 2 * Math.PI);
+    ctx.fill();
 
 }
 
-function limpaTela() {
-    pincel.clearRect(0, 0, 800, 600);
+const limpacanvas = () => {
+    ctx.clearRect(0, 0, 800, 600);
 }
 
-function desenhaAlvo(x, y) {
+const desenhaAlvo = (x, y) => {
     desenhaCirculo(x, y, raio + 20, 'red');
     desenhaCirculo(x, y, raio + 10, 'white');
     desenhaCirculo(x, y, raio, 'red');
@@ -27,16 +27,16 @@ function sorteiaPosicao(maximo) {
     return Math.floor(Math.random() * maximo);
 }
 
-function atualizaTela() {
-    limpaTela();
+const atualizacanvas = () => {
+    limpacanvas();
     xAleatorio = sorteiaPosicao(600);
     yAleatorio = sorteiaPosicao(400);
     desenhaAlvo(xAleatorio, yAleatorio);
 }
 
-function dispara(evento) {
-    var x = evento.pageX - tela.offsetLeft;
-    var y = evento.pageY - tela.offsetTop;
+const dispara = (evento) => {
+    var x = evento.pageX - canvas.offsetLeft;
+    var y = evento.pageY - canvas.offsetTop;
 
     if ((x > xAleatorio - raio)
         && (x < xAleatorio + raio)
@@ -47,17 +47,17 @@ function dispara(evento) {
     }
 }
 
-tela.onclick = dispara;
+canvas.onclick = dispara;
 
 var posicao = 0;
 var nivelDificuldade = 4000;
-setInterval(atualizaTela, nivelDificuldade);
+setInterval(atualizacanvas, nivelDificuldade);
 
-function aumentaNivel() {
+const aumentaNivel = () => {
     var nivel = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard Core'];
     posicao++;
     alert('Acertou! Nível: ' + nivel[posicao]);
 
     nivelDificuldade = nivelDificuldade - 500;
-    setInterval(atualizaTela, nivelDificuldade);
+    setInterval(atualizacanvas, nivelDificuldade);
 }
