@@ -1,63 +1,63 @@
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
-var raio = 10;
-var xAleatorio = sorteiaPosicao(800);
-var yAleatorio = sorteiaPosicao(500);
+var radius = 10;
+var xAleatorio = drawPosition(800);
+var yAleatorio = drawPosition(500);
 
-const desenhaCirculo = (x, y, raio, cor) => {
+const drawCircle = (x, y, radius, cor) => {
     ctx.fillStyle = cor;
     ctx.beginPath();
-    ctx.arc(x, y, raio, 0, 2 * Math.PI);
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fill();
 
 }
 
-const limpacanvas = () => {
-    ctx.clearRect(0, 0, 800, 600);
+const resetCanvas = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 const desenhaAlvo = (x, y) => {
-    desenhaCirculo(x, y, raio + 20, 'red');
-    desenhaCirculo(x, y, raio + 10, 'white');
-    desenhaCirculo(x, y, raio, 'red');
+    drawCircle(x, y, radius + 20, 'red');
+    drawCircle(x, y, radius + 10, 'white');
+    drawCircle(x, y, radius, 'red');
 }
 
-function sorteiaPosicao(maximo) {
+function drawPosition(maximo) {
     return Math.floor(Math.random() * maximo);
 }
 
-const atualizacanvas = () => {
-    limpacanvas();
-    xAleatorio = sorteiaPosicao(600);
-    yAleatorio = sorteiaPosicao(400);
+const updateCanvas = () => {
+    resetCanvas();
+    xAleatorio = drawPosition(canvas.width);
+    yAleatorio = drawPosition(canvas.height);
     desenhaAlvo(xAleatorio, yAleatorio);
 }
 
-const dispara = (evento) => {
+const checkCollision = (evento) => {
     var x = evento.pageX - canvas.offsetLeft;
     var y = evento.pageY - canvas.offsetTop;
 
-    if ((x > xAleatorio - raio)
-        && (x < xAleatorio + raio)
-        && (y > yAleatorio - raio)
-        && (y < yAleatorio + raio)) {
+    if ((x > xAleatorio - radius)
+        && (x < xAleatorio + radius)
+        && (y > yAleatorio - radius)
+        && (y < yAleatorio + radius)) {
 
-        aumentaNivel();
+        nextLevel();
     }
 }
 
-canvas.onclick = dispara;
+canvas.onclick = checkCollision;
 
-var posicao = 0;
+var position = 0;
 var nivelDificuldade = 4000;
-setInterval(atualizacanvas, nivelDificuldade);
+setInterval(updateCanvas, nivelDificuldade);
 
-const aumentaNivel = () => {
+const nextLevel = () => {
     var nivel = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard Core'];
-    posicao++;
-    alert('Acertou! Nível: ' + nivel[posicao]);
+    position++;
+    alert('Acertou! Nível: ' + nivel[position]);
 
     nivelDificuldade = nivelDificuldade - 500;
-    setInterval(atualizacanvas, nivelDificuldade);
+    setInterval(updateCanvas, nivelDificuldade);
 }
