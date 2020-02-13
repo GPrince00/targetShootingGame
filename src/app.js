@@ -57,7 +57,7 @@ canvas.onclick = checkCollision;
 const nextLevel = () => {
     var levelArray = [1, 2, 3, 4, 5, 6, 7, 8, 'Hard core'];
     position++;
-    alert('Acertou! Nível: ' + levelArray[position]);
+    alert('Congrats! Level: ' + levelArray[position]);
     difficultLevel -= 7;
 }
 
